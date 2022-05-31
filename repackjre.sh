@@ -17,6 +17,7 @@ mkdir -p "$out"
 compress_jars(){
   find ./ -name '*.jar' -execdir pack200 -S-1 -g -G -E9 {}.pack {} \;
   find ./ -name '*.jar' -execdir rm {} \;
+  find ./ -name '*.pack' -execdir unpack200 -r {} {}.jar \; # The goal is to just trim out the debug data
 }
 
 # here comes a not-so-complicated functions to easily make desired arch
