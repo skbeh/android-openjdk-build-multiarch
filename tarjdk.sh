@@ -7,7 +7,9 @@ if [ "$BUILD_IOS" != "1" ]; then
   unset AR AS CC CXX LD OBJCOPY RANLIB STRIP CPPFLAGS LDFLAGS
   git clone https://github.com/termux/termux-elf-cleaner || true
   cd termux-elf-cleaner
-  make CFLAGS=__ANDROID_API__=24 termux-elf-cleaner
+  autoreconf --install
+  ./configure
+  make
   chmod +x termux-elf-cleaner
   cd ..
 
