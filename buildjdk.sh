@@ -1,12 +1,11 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 . setdevkitpath.sh
 
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
-export CUPS_DIR=$PWD/cups-2.2.4
+export CUPS_DIR=$PWD/cups-2.3.3
 export CFLAGS+=" -DLE_STANDALONE -DANDROID" # -I$FREETYPE_DIR -I$CUPS_DI
-if [ "$TARGET_JDK" == "arm" ]
-then
+if [ "$TARGET_JDK" == "arm" ]; then
   export CFLAGS+=" -O3 -D__thumb__"
 else
   export CFLAGS+=" -O3"
@@ -34,7 +33,7 @@ if [ "$BUILD_IOS" != "1" ]; then
 
   sudo apt -y install systemtap-sdt-dev libxtst-dev libasound2-dev libelf-dev libfontconfig1-dev libx11-dev libxext-dev libxrandr-dev libxrender-dev libxtst-dev libxt-dev
 
-# Create dummy libraries so we won't have to remove them in OpenJDK makefiles
+  # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
   mkdir -p dummy_libs
   ar cru dummy_libs/libpthread.a
   ar cru dummy_libs/librt.a
@@ -61,27 +60,27 @@ cd openjdk
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
 
 bash ./configure \
-    --openjdk-target=$TARGET \
-    --with-extra-cflags="$CFLAGS" \
-    --with-extra-cxxflags="$CFLAGS" \
-    --with-extra-ldflags="$LDFLAGS" \
-    --disable-precompiled-headers \
-    --disable-warnings-as-errors \
-    --enable-option-checking=fatal \
-    --enable-headless-only=yes \
-    --with-toolchain-type=gcc \
-    --with-jvm-variants=$JVM_VARIANTS \
-    --with-jvm-features=-dtrace,-zero,-vm-structs,-epsilongc \
-    --with-cups-include=$CUPS_DIR \
-    --with-devkit=$TOOLCHAIN \
-    --with-debug-level=$JDK_DEBUG_LEVEL \
-    --with-fontconfig-include=$ANDROID_INCLUDE \
-    --with-freetype-lib=$FREETYPE_DIR/lib \
-    --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-    $AUTOCONF_x11arg $AUTOCONF_EXTRA_ARGS \
-    --x-libraries=/usr/lib \
-        $platform_args || \
-error_code=$?
+  --openjdk-target=$TARGET \
+  --with-extra-cflags="$CFLAGS" \
+  --with-extra-cxxflags="$CFLAGS" \
+  --with-extra-ldflags="$LDFLAGS" \
+  --disable-precompiled-headers \
+  --disable-warnings-as-errors \
+  --enable-option-checking=fatal \
+  --enable-headless-only=yes \
+  --with-toolchain-type=gcc \
+  --with-jvm-variants=$JVM_VARIANTS \
+  --with-jvm-features=-dtrace,-zero,-vm-structs,-epsilongc \
+  --with-cups-include=$CUPS_DIR \
+  --with-devkit=$TOOLCHAIN \
+  --with-debug-level=$JDK_DEBUG_LEVEL \
+  --with-fontconfig-include=$ANDROID_INCLUDE \
+  --with-freetype-lib=$FREETYPE_DIR/lib \
+  --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
+  $AUTOCONF_x11arg $AUTOCONF_EXTRA_ARGS \
+  --x-libraries=/usr/lib \
+  $platform_args ||
+  error_code=$?
 if [ "$error_code" -ne 0 ]; then
   echo "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
@@ -89,8 +88,8 @@ if [ "$error_code" -ne 0 ]; then
 fi
 
 cd build/${JVM_PLATFORM}-${TARGET_JDK}-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
-make JOBS=4 images || \
-error_code=$?
+make JOBS=4 images ||
+  error_code=$?
 if [ "$error_code" -ne 0 ]; then
   echo "Build failure, exited with code $error_code. Trying again."
   make JOBS=4 images

@@ -6,11 +6,10 @@ export JDK_DEBUG_LEVEL=release
 
 if [ "$BUILD_IOS" != "1" ]; then
   sudo apt update
-  sudo apt -y install autoconf python unzip zip
+  sudo apt -y install autoconf python3 unzip zip
 
-  wget -nc -nv -O android-ndk-$NDK_VERSION-linux-x86_64.zip "https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux-x86_64.zip"
+  wget -nc -nv -O android-ndk-$NDK_VERSION-linux.zip "https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux.zip"
   ./extractndk.sh
-  ./maketoolchain.sh
 else
   # OpenJDK 8 iOS port is still in unusable state, so we need build in debug mode
   export JDK_DEBUG_LEVEL=slowdebug
