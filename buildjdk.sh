@@ -59,7 +59,7 @@ cd openjdk
 #   --with-extra-cflags="$CPPFLAGS" \
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
 
-env -u CFLAGS -u LDFLAGS ./configure \
+env -u CFLAGS -u LDFLAGS bash ./configure \
   --openjdk-target=$TARGET \
   --with-extra-cflags="$CFLAGS" \
   --with-extra-cxxflags="$CFLAGS" \
