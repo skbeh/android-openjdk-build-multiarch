@@ -42,22 +42,21 @@ else
   # Set NDK
   export API=21
   export NDK=$PWD/android-ndk-$NDK_VERSION
-  export TOOLCHAIN=$NDK/generated-toolchains/android-${TARGET_SHORT}-toolchain
-  # export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
+  export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
 
   export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 
   export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET" # -I/usr/include -I/usr/lib
   export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
 
-  export thecc=$TOOLCHAIN/bin/$TARGET-gcc
-  export thecxx=$TOOLCHAIN/bin/$TARGET-g++
+  export thecc=$TOOLCHAIN/bin/$TARGET$API-clang
+  export thecxx=$TOOLCHAIN/bin/$TARGET$API-clang++
 
   # Configure and build.
   export AR=$TOOLCHAIN/bin/llvm-ar
-  export CC=$TOOLCHAIN/bin/$TARGET$API-clang
+  export CC=$thecc
   export AS=$CC
-  export CXX=$TOOLCHAIN/bin/$TARGET$API-clang++
+  export CXX=$thecxx
   export LD=$TOOLCHAIN/bin/ld
   export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
   export STRIP=$TOOLCHAIN/bin/llvm-strip

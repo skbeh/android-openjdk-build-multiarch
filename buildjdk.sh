@@ -68,7 +68,7 @@ bash ./configure \
   --disable-warnings-as-errors \
   --enable-option-checking=fatal \
   --enable-headless-only=yes \
-  --with-toolchain-type=gcc \
+  --with-toolchain-type=clang \
   --with-jvm-variants=$JVM_VARIANTS \
   --with-jvm-features=-dtrace,-zero,-vm-structs,-epsilongc \
   --with-cups-include=$CUPS_DIR \
