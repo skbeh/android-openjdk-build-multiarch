@@ -5,7 +5,7 @@ set -euo pipefail
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
 export CUPS_DIR=$PWD/cups-2.3.3
 export CFLAGS+=" -DLE_STANDALONE -DANDROID" # -I$FREETYPE_DIR -I$CUPS_DI
-if [ "$TARGET_JDK" == "aarch32" ]; then
+if [ "$TARGET_JDK" == "arm" ]; then
   export CFLAGS+=" -O3 -D__thumb__"
 else
   export CFLAGS+=" -O3"
