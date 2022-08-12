@@ -35,9 +35,9 @@ if [ "$BUILD_IOS" != "1" ]; then
 
   # Create dummy libraries so we won't have to remove them in OpenJDK makefiles
   mkdir -p dummy_libs
-  ar cru dummy_libs/libpthread.a
-  ar cru dummy_libs/librt.a
-  ar cru dummy_libs/libthread_db.a
+  ar cr dummy_libs/libpthread.a
+  ar cr dummy_libs/librt.a
+  ar cr dummy_libs/libthread_db.a
 else
   ln -s -f /opt/X11/include/X11 $ANDROID_INCLUDE/
   platform_args=--with-toolchain-type=clang
@@ -59,7 +59,7 @@ cd openjdk
 #   --with-extra-cflags="$CPPFLAGS" \
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
 
-bash ./configure \
+env -u CFLAGS -u LDFLAGS ./configure \
   --openjdk-target=$TARGET \
   --with-extra-cflags="$CFLAGS" \
   --with-extra-cxxflags="$CFLAGS" \
