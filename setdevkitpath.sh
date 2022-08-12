@@ -20,7 +20,7 @@ if [ -z "$JVM_VARIANTS" ]; then
   export JVM_VARIANTS=server
 fi
 
-if [ "$BUILD_IOS" == "1" ]; then
+if [ "${BUILD_IOS:=0}" == "1" ]; then
   export JVM_PLATFORM=macosx
 
   export thecc=$(xcrun -find -sdk iphoneos clang)
@@ -37,7 +37,6 @@ if [ "$BUILD_IOS" == "1" ]; then
 
   export ANDROID_INCLUDE=$PWD/ios-missing-include
 else
-
   export JVM_PLATFORM=linux
   # Set NDK
   export API=21

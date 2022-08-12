@@ -22,7 +22,7 @@ fi
 # cp -R /usr/include/X11 $ANDROID_INCLUDE/
 # cp -R /usr/include/fontconfig $ANDROID_INCLUDE/
 
-if [ -z "$BUILD_IOS" ] || [ "$BUILD_IOS" != "1" ]; then
+if [ "$BUILD_IOS" != "1" ]; then
   chmod +x android-wrapped-clang
   chmod +x android-wrapped-clang++
   ln -s -f /usr/include/X11 $ANDROID_INCLUDE/
