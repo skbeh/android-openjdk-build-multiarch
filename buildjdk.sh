@@ -77,7 +77,7 @@ bash ./configure \
   --with-fontconfig-include=$ANDROID_INCLUDE \
   --with-freetype-lib=$FREETYPE_DIR/lib \
   --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-  $AUTOCONF_x11arg $AUTOCONF_EXTRA_ARGS \
+  $AUTOCONF_x11arg ${AUTOCONF_EXTRA_ARGS:-} \
   --x-libraries=/usr/lib \
   $platform_args ||
   error_code=$?
