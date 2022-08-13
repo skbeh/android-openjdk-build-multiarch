@@ -59,4 +59,7 @@ else
   export LD=$TOOLCHAIN/bin/ld
   export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
   export STRIP=$TOOLCHAIN/bin/llvm-strip
+  export NM=$TOOLCHAIN/bin/llvm-nm
+  export OBJCOPY=$TOOLCHAIN/bin/llvm-objcopy
+  export OBJDUMP=$TOOLCHAIN/bin/llvm-objdump
 fi
