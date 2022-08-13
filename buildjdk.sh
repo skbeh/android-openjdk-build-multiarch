@@ -61,7 +61,7 @@ env -u CFLAGS -u LDFLAGS bash ./configure \
   --openjdk-target=$TARGET \
   --with-extra-cflags="$CFLAGS" \
   --with-extra-cxxflags="$CFLAGS" \
-  --with-extra-ldflags="$LDFLAGS -Wl,--enable-new-dtags -landroid-shmem -landroid-spawn" \
+  --with-extra-ldflags="$LDFLAGS -Wl,--enable-new-dtags" \
   --disable-precompiled-headers \
   --disable-warnings-as-errors \
   --enable-option-checking=fatal \
