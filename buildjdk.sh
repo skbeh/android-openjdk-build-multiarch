@@ -6,7 +6,7 @@ export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_
 export CUPS_DIR=$PWD/cups-2.3.3
 export CFLAGS+=" -DLE_STANDALONE -DANDROID" # -I$FREETYPE_DIR -I$CUPS_DI
 if [ "$TARGET_JDK" == "arm" ]; then
-  export CFLAGS+=" -O3 -D__thumb__"
+  export CFLAGS+=" -O3 -D__thumb__ -DARM"
 else
   export CFLAGS+=" -O3"
 fi
