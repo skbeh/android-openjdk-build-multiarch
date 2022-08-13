@@ -24,8 +24,8 @@ exit 1
 ' sh {} \; -print
   }
 
-  findexec jreout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
-  findexec jdkout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
+  #findexec jreout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
+  #findexec jdkout | xargs -- ./termux-elf-cleaner/termux-elf-cleaner
 
 fi
 
