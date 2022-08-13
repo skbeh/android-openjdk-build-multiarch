@@ -63,7 +63,7 @@ env -u CFLAGS -u LDFLAGS bash ./configure \
   --openjdk-target=$TARGET \
   --with-extra-cflags="$CFLAGS" \
   --with-extra-cxxflags="$CFLAGS" \
-  --with-extra-ldflags="$LDFLAGS" \
+  --with-extra-ldflags="$LDFLAGS -Wl,--enable-new-dtags -landroid-shmem -landroid-spawn" \
   --disable-precompiled-headers \
   --disable-warnings-as-errors \
   --enable-option-checking=fatal \
@@ -79,6 +79,11 @@ env -u CFLAGS -u LDFLAGS bash ./configure \
   --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
   $AUTOCONF_x11arg ${AUTOCONF_EXTRA_ARGS:-} \
   --x-libraries=/usr/lib \
+  AR="$AR" \
+  NM="$NM" \
+  OBJCOPY="$OBJCOPY" \
+  OBJDUMP="$OBJDUMP" \
+  STRIP="$STRIP" \
   ${platform_args:-} ||
   error_code=$?
 if [ "${error_code:-0}" -ne 0 ]; then
