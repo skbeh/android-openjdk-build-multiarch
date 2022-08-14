@@ -1,5 +1,7 @@
+#!/bin/bash
 ## Usage:
 ## ./repackjre.sh [path_to_normal_jre_tarballs] [output_path]
+set -euo pipefail
 
 # set args
 export in="$1"
@@ -10,8 +12,8 @@ work="$in/work"
 work1="$in/work1"
 
 # make sure paths exist
-mkdir -p $work
-mkdir -p $work1
+mkdir -p "$work"
+mkdir -p "$work1"
 mkdir -p "$out"
 
 # here comes a not-so-complicated functions to easily make desired arch
@@ -19,7 +21,11 @@ mkdir -p "$out"
 makearch() {
   echo "Making $2..."
   cd "$work"
-  tar xf $(find "$in" -name jre17-$2-*release.tar.xz) >/dev/null 2>&1
+
+  find "$in" -name "jre17-$2-*release.tar.xz" | while IFS='' read -r line; do
+    tar xf "$line" >/dev/null
+  done
+
   mv bin "$work1"/
   mkdir -p "$work1"/lib
 
@@ -34,17 +40,20 @@ makearch() {
 
   mv release "$work1"/release
 
-  tar cJf bin-$2.tar.xz -C "$work1" . >/dev/null 2>&1
-  mv bin-$2.tar.xz "$out"/
-  rm -rf "$work"/*
-  rm -rf "$work1"/*
+  tar cJf bin-"$2".tar.xz -C "$work1" . >/dev/null 2>&1
+  mv bin-"$2".tar.xz "$out"/
+  rm -rf "${work:?}"/*
+  rm -rf "${work1:?}"/*
 }
 
 # this one's static
 makeuni() {
   echo "Making universal..."
   cd "$work"
-  tar xf $(find "$in" -name jre17-arm64-*release.tar.xz) >/dev/null 2>&1
+
+  find "$in" -name 'jre17-arm64-*release.tar.xz' | while IFS='' read -r line; do
+    tar xf "$line" >/dev/null
+  done
 
   rm -rf bin
   rm -rf lib/server
@@ -52,9 +61,9 @@ makeuni() {
   find ./ -name '*.so' -execdir rm {} \; # Remove arch specific shared objects
   rm release
 
-  tar cJf universal.tar.xz * >/dev/null 2>&1
+  tar cJf universal.tar.xz ./* >/dev/null 2>&1
   mv universal.tar.xz "$out"/
-  rm -rf "$work"/*
+  rm -rf "${work:?}"/*
 }
 
 # now time to use them!
@@ -64,7 +73,7 @@ makearch amd64 x86_64
 
 # if running under GitHub Actions, write commit sha, else formatted system date
 if [ -n "$GITHUB_SHA" ]; then
-  echo $GITHUB_SHA >"$out"/version
+  echo "$GITHUB_SHA" >"$out"/version
 else
   date +%Y%m%d >"$out"/version
 fi

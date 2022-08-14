@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 . setdevkitpath.sh
 cd freetype-$BUILD_FREETYPE_VERSION
 
@@ -11,8 +10,8 @@ if [ "$BUILD_IOS" == "1" ]; then
   export CC=$thecc
   export CXX=$thecxx
   ./configure \
-    --host=$TARGET \
-    --prefix=${PWD}/build_android-${TARGET_SHORT} \
+    --host="$TARGET" \
+    --prefix="${PWD}"/build_android-"${TARGET_SHORT}" \
     --enable-shared=no --enable-static=yes \
     --without-zlib \
     --with-brotli=no \
@@ -26,17 +25,17 @@ if [ "$BUILD_IOS" == "1" ]; then
 else
   export PATH=$TOOLCHAIN/bin:$PATH
   ./configure \
-    --host=$TARGET \
-    --prefix=${PWD}/build_android-${TARGET_SHORT} \
+    --host="$TARGET" \
+    --prefix="${PWD}"/build_android-"${TARGET_SHORT}" \
     --without-zlib \
     --with-brotli=no \
     --with-png=no \
-    --with-harfbuzz=no $EXTRA_ARGS ||
+    --with-harfbuzz=no "$EXTRA_ARGS" ||
     error_code=$?
 fi
 if [ "$error_code" -ne 0 ]; then
-  echo "\n\nCONFIGURE ERROR $error_code , config.log:"
-  cat ${PWD}/builds/unix/config.log
+  echo -e "\n\nCONFIGURE ERROR $error_code , config.log:"
+  cat "${PWD}"/builds/unix/config.log
   exit $error_code
 fi
 
@@ -44,5 +43,5 @@ CFLAGS=-fno-rtti CXXFLAGS=-fno-rtti make -j4
 make install
 
 if [ -f "${namefreetype}.a" ]; then
-  clang -fPIC -shared $LDFLAGS -lbz2 -Wl,-all_load ${namefreetype}.a -o ${namefreetype}.dylib
+  clang -fPIC -shared "$LDFLAGS" -lbz2 -Wl,-all_load "${namefreetype}".a -o "${namefreetype}".dylib
 fi

@@ -23,8 +23,8 @@ fi
 if [ "$BUILD_IOS" != "1" ]; then
   chmod +x android-wrapped-clang
   chmod +x android-wrapped-clang++
-  ln -s -f /usr/include/X11 $ANDROID_INCLUDE/
-  ln -s -f /usr/include/fontconfig $ANDROID_INCLUDE/
+  ln -s -f /usr/include/X11 "$ANDROID_INCLUDE"/
+  ln -s -f /usr/include/fontconfig "$ANDROID_INCLUDE"/
   AUTOCONF_x11arg="--x-includes=$ANDROID_INCLUDE/X11"
 
   export LDFLAGS+=" -L$PWD/dummy_libs"
@@ -37,7 +37,7 @@ if [ "$BUILD_IOS" != "1" ]; then
   ar cr dummy_libs/librt.a
   ar cr dummy_libs/libthread_db.a
 else
-  ln -s -f /opt/X11/include/X11 $ANDROID_INCLUDE/
+  ln -s -f /opt/X11/include/X11 "$ANDROID_INCLUDE"/
   platform_args=--with-toolchain-type=clang
   AUTOCONF_x11arg="--with-x=/opt/X11/include/X11 --disable-precompiled-headers --prefix=/usr/lib"
   sameflags="-arch arm64 -isysroot $thesysroot -miphoneos-version-min=12.0 -DHEADLESS=1 -I$PWD/ios-missing-include -Wno-implicit-function-declaration"
@@ -48,7 +48,7 @@ else
 fi
 
 # fix building libjawt
-ln -s -f $CUPS_DIR/cups $ANDROID_INCLUDE/
+ln -s -f "$CUPS_DIR"/cups "$ANDROID_INCLUDE"/
 
 cd openjdk
 # rm -rf build
@@ -58,7 +58,7 @@ cd openjdk
 #   --with-sysroot="$(xcrun --sdk iphoneos --show-sdk-path)" \
 
 env -u CFLAGS -u LDFLAGS bash ./configure \
-  --openjdk-target=$TARGET \
+  --openjdk-target="$TARGET" \
   --with-extra-cflags="$CFLAGS" \
   --with-extra-cxxflags="$CFLAGS" \
   --with-extra-ldflags="$LDFLAGS -Wl,--enable-new-dtags" \
@@ -69,13 +69,13 @@ env -u CFLAGS -u LDFLAGS bash ./configure \
   --with-toolchain-type=clang \
   --with-jvm-variants=$JVM_VARIANTS \
   --with-jvm-features=-dtrace,-zero,-vm-structs,-epsilongc \
-  --with-cups-include=$CUPS_DIR \
-  --with-devkit=$TOOLCHAIN \
+  --with-cups-include="$CUPS_DIR" \
+  --with-devkit="$TOOLCHAIN" \
   --with-debug-level=$JDK_DEBUG_LEVEL \
-  --with-fontconfig-include=$ANDROID_INCLUDE \
-  --with-freetype-lib=$FREETYPE_DIR/lib \
-  --with-freetype-include=$FREETYPE_DIR/include/freetype2 \
-  $AUTOCONF_x11arg ${AUTOCONF_EXTRA_ARGS:-} \
+  --with-fontconfig-include="$ANDROID_INCLUDE" \
+  --with-freetype-lib="$FREETYPE_DIR"/lib \
+  --with-freetype-include="$FREETYPE_DIR"/include/freetype2 \
+  "$AUTOCONF_x11arg" "${AUTOCONF_EXTRA_ARGS:-}" \
   --x-libraries=/usr/lib \
   AR="$AR" \
   NM="$NM" \
@@ -85,12 +85,12 @@ env -u CFLAGS -u LDFLAGS bash ./configure \
   ${platform_args:-} ||
   error_code=$?
 if [ "${error_code:-0}" -ne 0 ]; then
-  echo "\n\nCONFIGURE ERROR $error_code , config.log:"
+  echo -e "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat config.log
   exit $error_code
 fi
 
-cd build/${JVM_PLATFORM}-${TARGET_JDK}-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
+cd build/${JVM_PLATFORM}-"${TARGET_JDK}"-${JVM_VARIANTS}-${JDK_DEBUG_LEVEL}
 make JOBS=4 images ||
   error_code=$?
 if [ "${error_code:-0}" -ne 0 ]; then

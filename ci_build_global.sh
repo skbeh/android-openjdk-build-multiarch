@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 . setdevkitpath.sh
 
 export JDK_DEBUG_LEVEL=release

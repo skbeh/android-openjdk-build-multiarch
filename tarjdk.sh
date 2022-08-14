@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 . setdevkitpath.sh
 
 if [ "$BUILD_IOS" != "1" ]; then
@@ -14,7 +13,7 @@ if [ "$BUILD_IOS" != "1" ]; then
   cd ..
 
   findexec() {
-    find $1 -type f -name "*" -not -name "*.o" -exec sh -c '
+    find "$1" -type f -name "*" -not -name "*.o" -exec sh -c '
     case "$(head -n 1 "$1")" in
       ?ELF*) exit 0;;
       MZ*) exit 0;;
@@ -32,7 +31,7 @@ fi
 mv jre_override/lib/* jreout/lib/ || true
 
 cd jreout
-tar cJf ../jre17-${TARGET_SHORT}-$(date +%Y%m%d)-${JDK_DEBUG_LEVEL}.tar.xz .
+tar cJf "../jre17-${TARGET_SHORT}-$(date +%Y%m%d)-${JDK_DEBUG_LEVEL}.tar.xz" .
 
 cd ../jdkout
-tar cJf ../jdk17-${TARGET_SHORT}-$(date +%Y%m%d)-${JDK_DEBUG_LEVEL}.tar.xz .
+tar cJf "../jdk17-${TARGET_SHORT}-$(date +%Y%m%d)-${JDK_DEBUG_LEVEL}.tar.xz" .
