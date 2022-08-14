@@ -42,6 +42,6 @@ fi
 CFLAGS=-fno-rtti CXXFLAGS=-fno-rtti make -j4
 make install
 
-if [ -z "${namefreetype:-}" ] && [ -f "$namefreetype.a" ]; then
+if [ -v "$namefreetype" ] || [ -f "$namefreetype.a" ]; then
   clang -fPIC -shared "$LDFLAGS" -lbz2 -Wl,-all_load "${namefreetype}".a -o "${namefreetype}".dylib
 fi
