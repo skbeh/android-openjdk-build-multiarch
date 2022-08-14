@@ -33,7 +33,7 @@ else
     --with-harfbuzz=no "${EXTRA_ARGS:-}" ||
     error_code=$?
 fi
-if [ "$error_code" -ne 0 ]; then
+if [ "${error_code:0}" -ne 0 ]; then
   echo -e "\n\nCONFIGURE ERROR $error_code , config.log:"
   cat "${PWD}"/builds/unix/config.log
   exit $error_code
