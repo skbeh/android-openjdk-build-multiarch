@@ -30,7 +30,7 @@ else
     --without-zlib \
     --with-brotli=no \
     --with-png=no \
-    --with-harfbuzz=no "$EXTRA_ARGS" ||
+    --with-harfbuzz=no "${EXTRA_ARGS:-}" ||
     error_code=$?
 fi
 if [ "$error_code" -ne 0 ]; then
