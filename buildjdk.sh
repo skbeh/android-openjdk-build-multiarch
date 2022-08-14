@@ -4,7 +4,7 @@ set -euo pipefail
 
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
 export CUPS_DIR=$PWD/cups-2.3.3
-export CFLAGS+=" -DLE_STANDALONE -DANDROID -integrated-as -O3 -flto -mllvm -polly" # -I$FREETYPE_DIR -I$CUPS_DI
+export CFLAGS+=" -DLE_STANDALONE -DANDROID -pipe -integrated-as -Ofast -flto -mllvm -polly -fno-plt -mllvm -polly-vectorizer=polly -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce"
 if [ "$TARGET_JDK" == "arm" ]; then
   export CFLAGS+=" -D__thumb__ -DARM"
 fi
