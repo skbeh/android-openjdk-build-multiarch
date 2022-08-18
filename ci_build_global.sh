@@ -10,9 +10,6 @@ if [ "$BUILD_IOS" != "1" ]; then
   wget -nc -nv -O android-ndk-$NDK_VERSION-linux.zip "https://dl.google.com/android/repository/android-ndk-$NDK_VERSION-linux.zip"
   ./extractndk.sh
 else
-  # OpenJDK 8 iOS port is still in unusable state, so we need build in debug mode
-  export JDK_DEBUG_LEVEL=slowdebug
-
   chmod +x ios-arm64-clang
   chmod +x ios-arm64-clang++
   chmod +x macos-host-cc

@@ -2,7 +2,6 @@
 . setdevkitpath.sh
 
 if [ "$BUILD_IOS" != "1" ]; then
-
   unset AR AS CC CXX LD OBJCOPY RANLIB STRIP CPPFLAGS LDFLAGS
   git clone https://github.com/termux/termux-elf-cleaner || true
   cd termux-elf-cleaner
@@ -28,7 +27,7 @@ exit 1
 
 fi
 
-mv jre_override/lib/* jreout/lib/ || true
+cp -rv jre_override/lib/* jreout/lib/ || true
 
 cd jreout
 tar cJf "../jre17-${TARGET_SHORT}-$(date +%Y%m%d)-${JDK_DEBUG_LEVEL}.tar.xz" .
