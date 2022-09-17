@@ -48,7 +48,7 @@ else
 
   export ANDROID_INCLUDE=$TOOLCHAIN/sysroot/usr/include
 
-  export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET" # -I/usr/include -I/usr/lib
+  export CPPFLAGS="-I$ANDROID_INCLUDE -I$ANDROID_INCLUDE/$TARGET"
   export LDFLAGS="-L$NDK/platforms/android-$API/arch-$TARGET_SHORT/usr/lib"
 
   export thecc=$TOOLCHAIN/bin/$TARGET$API-clang
