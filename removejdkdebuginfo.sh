@@ -7,7 +7,7 @@ rm -rf dizout jreout jdkout dSYM-temp
 mkdir -p dizout dSYM-temp/{lib,bin}
 
 if [ "$BUILD_IOS" != "1" ]; then
-   cp freetype-$BUILD_FREETYPE_VERSION/build_android-"$TARGET_SHORT"/lib/libfreetype.so "$imagespath"/jdk/lib/
+  cp freetype-$BUILD_FREETYPE_VERSION/build_android-"$TARGET_SHORT"/lib/libfreetype.so "$imagespath"/jdk/lib/
 fi
 
 cp -r "$imagespath"/jdk jdkout
@@ -29,14 +29,18 @@ jlink \
   --release-info=jdkout/release \
   --compress=0
 
+if [ "$BUILD_IOS" != "1" ]; then
+  cp freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT/lib/libfreetype.so jreout/lib/
+fi
+
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep
 # find jreout -name "*.debuginfo" | xargs -- rm
 # mv jreout/lib/${TARGET_JDK}/libfontmanager.diz.keep jreout/lib/${TARGET_JDK}/libfontmanager.diz
 
-find jdkout -iname '*.debuginfo' | xargs -- rm
+find jdkout -iname '*.debuginfo' -delete
 find jreout -iname '*.debuginfo' -exec mv {} dizout/ \;
 
-find jdkout -iname "*.dSYM"  | xargs -- rm -rf
+find jdkout -iname "*.dSYM" -delete
 
 #TODO: fix .dSYM stuff
 
