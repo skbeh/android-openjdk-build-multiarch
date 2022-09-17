@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-export NDK_VERSION=r25
+export NDK_VERSION=r25b
 
 if [ -z "${BUILD_FREETYPE_VERSION:-}" ]; then
   export BUILD_FREETYPE_VERSION="2.12.1"
