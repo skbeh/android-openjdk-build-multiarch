@@ -3,7 +3,7 @@ set -euo pipefail
 . setdevkitpath.sh
 
 export FREETYPE_DIR=$PWD/freetype-$BUILD_FREETYPE_VERSION/build_android-$TARGET_SHORT
-export CUPS_DIR=$PWD/cups-2.3.3
+export CUPS_DIR=$PWD/cups-2.4.2
 export CFLAGS+=" -DLE_STANDALONE -DANDROID -pipe -integrated-as -fno-plt -Ofast -flto -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-invariant-load-hoisting -mllvm -polly-run-inliner -mllvm -polly-run-dce"
 if [ "$TARGET_JDK" == "arm" ]; then
   export CFLAGS+=" -D__thumb__"

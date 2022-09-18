@@ -4,6 +4,6 @@
 
 wget https://downloads.sourceforge.net/project/freetype/freetype2/$BUILD_FREETYPE_VERSION/freetype-$BUILD_FREETYPE_VERSION.tar.gz
 tar xf freetype-$BUILD_FREETYPE_VERSION.tar.gz
-wget https://github.com/apple/cups/releases/download/v2.3.3/cups-2.3.3-source.tar.gz
-tar xf cups-2.3.3-source.tar.gz
-rm cups-2.3.3-source.tar.gz freetype-$BUILD_FREETYPE_VERSION.tar.gz
+wget https://github.com/OpenPrinting/cups/releases/download/v2.4.2/cups-2.4.2-source.tar.gz
+tar xf cups-2.4.2-source.tar.gz
+rm cups-2.4.2-source.tar.gz freetype-$BUILD_FREETYPE_VERSION.tar.gz
